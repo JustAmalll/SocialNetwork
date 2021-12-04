@@ -1,4 +1,4 @@
-package dev.amal.socialnetwork.ui.theme
+package dev.amal.socialnetwork.presentation.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

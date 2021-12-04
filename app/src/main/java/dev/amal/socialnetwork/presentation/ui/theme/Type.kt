@@ -1,4 +1,4 @@
-package dev.amal.socialnetwork.ui.theme
+package dev.amal.socialnetwork.presentation.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
