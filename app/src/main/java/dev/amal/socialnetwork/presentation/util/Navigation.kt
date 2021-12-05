@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.amal.socialnetwork.presentation.activity.ActivityScreen
 import dev.amal.socialnetwork.presentation.chat.ChatScreen
+import dev.amal.socialnetwork.presentation.create_post.CreatePostScreen
 import dev.amal.socialnetwork.presentation.login.LoginScreen
 import dev.amal.socialnetwork.presentation.main_feed.MainFeedScreen
 import dev.amal.socialnetwork.presentation.profile.ProfileScreen
@@ -42,6 +43,9 @@ fun Navigation(navController: NavHostController) {
         }
         composable(Screen.ProfileScreen.route) {
             ProfileScreen(navController = navController)
+        }
+        composable(Screen.CreatePostScreen.route) {
+            CreatePostScreen(navController = navController)
         }
     }
 }
