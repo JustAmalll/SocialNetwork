@@ -58,7 +58,7 @@ fun RowScope.StandardBottomNavItem(
                 .fillMaxSize()
                 .padding(SpaceSmall)
                 .drawBehind {
-                    if (selected) {
+                    if (lineLength.value > 0f) {
                         drawLine(
                             color = if (selected) selectedColor else unselectedColor,
                             start = Offset(

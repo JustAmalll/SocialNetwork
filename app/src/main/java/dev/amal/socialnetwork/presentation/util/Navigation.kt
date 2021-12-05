@@ -6,12 +6,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import dev.amal.socialnetwork.domain.models.Post
 import dev.amal.socialnetwork.presentation.activity.ActivityScreen
 import dev.amal.socialnetwork.presentation.chat.ChatScreen
 import dev.amal.socialnetwork.presentation.create_post.CreatePostScreen
 import dev.amal.socialnetwork.presentation.login.LoginScreen
 import dev.amal.socialnetwork.presentation.main_feed.MainFeedScreen
+import dev.amal.socialnetwork.presentation.post_detail.PostDetailScreen
 import dev.amal.socialnetwork.presentation.profile.ProfileScreen
 import dev.amal.socialnetwork.presentation.register.RegisterScreen
 import dev.amal.socialnetwork.presentation.splash.SplashScreen
@@ -46,6 +47,19 @@ fun Navigation(navController: NavHostController) {
         }
         composable(Screen.CreatePostScreen.route) {
             CreatePostScreen(navController = navController)
+        }
+        composable(Screen.PostDetailScreen.route) {
+            PostDetailScreen(
+                navController = navController,
+                post = Post(
+                    username = "Just_Amalll",
+                    imageUrl = "",
+                    profilePictureUrl = "",
+                    description = "Some Random Text Here",
+                    likeCount = 17,
+                    commentCount = 7
+                )
+            )
         }
     }
 }

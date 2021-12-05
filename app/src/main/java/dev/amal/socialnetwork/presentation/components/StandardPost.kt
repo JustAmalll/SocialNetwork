@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -94,9 +95,7 @@ fun StandardPost(
                 } else {
                     Text(
                         text = post.description,
-                        style = MaterialTheme.typography.body2,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = Constants.MAX_POST_DESCRIPTION_LINES
+                        style = MaterialTheme.typography.body2
                     )
                 }
                 Spacer(modifier = Modifier.height(SpaceMedium))
@@ -126,8 +125,9 @@ fun StandardPost(
             }
         }
         Image(
-            painterResource(id = R.drawable.amal),
+            painterResource(id = R.drawable.me),
             contentDescription = "Profile picture",
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(ProfilePictureSizeMedium)
                 .clip(CircleShape)

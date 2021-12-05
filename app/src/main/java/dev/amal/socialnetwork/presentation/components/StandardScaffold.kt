@@ -49,43 +49,44 @@ fun StandardScaffold(
     onFabClick: () -> Unit = {},
     content: @Composable () -> Unit
 ) {
-    Scaffold(bottomBar = {
-        if (showBottomBar) {
-            BottomAppBar(
-                modifier = Modifier.fillMaxWidth(),
-                backgroundColor = MaterialTheme.colors.surface,
-                cutoutShape = CircleShape,
-                elevation = 5.dp
-            ) {
-                BottomNavigation {
-                    bottomNavItems.forEachIndexed { i, bottomNavItem ->
-                        StandardBottomNavItem(
-                            icon = bottomNavItem.icon,
-                            contentDescription = bottomNavItem.contentDescription,
-                            selected = bottomNavItem.route == navController.currentDestination?.route,
-                            alertCount = bottomNavItem.alertCount,
-                            enabled = bottomNavItem.icon != null
-                        ) {
-                            if (navController.currentDestination?.route != bottomNavItem.route)
-                                navController.navigate(bottomNavItem.route)
+    Scaffold(
+        bottomBar = {
+            if (showBottomBar) {
+                BottomAppBar(
+                    modifier = Modifier.fillMaxWidth(),
+                    backgroundColor = MaterialTheme.colors.surface,
+                    cutoutShape = CircleShape,
+                    elevation = 5.dp
+                ) {
+                    BottomNavigation {
+                        bottomNavItems.forEachIndexed { i, bottomNavItem ->
+                            StandardBottomNavItem(
+                                icon = bottomNavItem.icon,
+                                contentDescription = bottomNavItem.contentDescription,
+                                selected = bottomNavItem.route == navController.currentDestination?.route,
+                                alertCount = bottomNavItem.alertCount,
+                                enabled = bottomNavItem.icon != null
+                            ) {
+                                if (navController.currentDestination?.route != bottomNavItem.route)
+                                    navController.navigate(bottomNavItem.route)
+                            }
                         }
                     }
                 }
             }
-        }
-    }, floatingActionButton = {
-        if (showBottomBar) {
-            FloatingActionButton(
-                onClick = onFabClick,
-                backgroundColor = MaterialTheme.colors.primary
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(id = R.string.make_post)
-                )
+        }, floatingActionButton = {
+            if (showBottomBar) {
+                FloatingActionButton(
+                    onClick = onFabClick,
+                    backgroundColor = MaterialTheme.colors.primary
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = stringResource(id = R.string.make_post)
+                    )
+                }
             }
-        }
-    }, isFloatingActionButtonDocked = true,
+        }, isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
         modifier = modifier
     ) {

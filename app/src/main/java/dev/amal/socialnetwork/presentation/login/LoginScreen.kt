@@ -51,6 +51,7 @@ fun LoginScreen(
             StandardTextField(
                 text = viewModel.usernameText.value,
                 onValueChange = { viewModel.setUsernameText(it) },
+                keyboardType = KeyboardType.Email,
                 hint = stringResource(id = R.string.login_hint)
             )
             Spacer(modifier = Modifier.height(SpaceMedium))
