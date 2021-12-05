@@ -1,4 +1,4 @@
-package dev.amal.socialnetwork.presentation.login
+package dev.amal.socialnetwork.presentation.register
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -23,9 +23,9 @@ import dev.amal.socialnetwork.presentation.ui.theme.SpaceMedium
 import dev.amal.socialnetwork.presentation.util.Screen
 
 @Composable
-fun LoginScreen(
+fun RegisterScreen(
     navController: NavController,
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: RegisterViewModel = hiltViewModel()
 ) {
     Box(
         modifier = Modifier
@@ -44,14 +44,22 @@ fun LoginScreen(
                 .align(Alignment.Center)
         ) {
             Text(
-                text = stringResource(id = R.string.login),
+                text = stringResource(id = R.string.register),
                 style = MaterialTheme.typography.h1
+            )
+            Spacer(modifier = Modifier.height(SpaceMedium))
+            StandardTextField(
+                text = viewModel.emailText.value,
+                onValueChange = { viewModel.setEmailText(it) },
+                error = viewModel.emailError.value,
+                hint = stringResource(id = R.string.email)
             )
             Spacer(modifier = Modifier.height(SpaceMedium))
             StandardTextField(
                 text = viewModel.usernameText.value,
                 onValueChange = { viewModel.setUsernameText(it) },
-                hint = stringResource(id = R.string.login_hint)
+                error = viewModel.usernameError.value,
+                hint = stringResource(id = R.string.username)
             )
             Spacer(modifier = Modifier.height(SpaceMedium))
             StandardTextField(
@@ -59,37 +67,33 @@ fun LoginScreen(
                 onValueChange = { viewModel.setPasswordText(it) },
                 hint = stringResource(id = R.string.password_hint),
                 keyboardType = KeyboardType.Password,
+                error = viewModel.passwordError.value,
                 isPasswordVisible = viewModel.showPassword.value,
                 onPasswordToggleClick = { viewModel.setShowPassword(it) }
             )
             Spacer(modifier = Modifier.height(SpaceMedium))
-            Button(
-                onClick = { navController.navigate(Screen.MainFeedScreen.route) },
-                modifier = Modifier.align(Alignment.End)
-            ) {
+            Button(onClick = {}, modifier = Modifier.align(Alignment.End)) {
                 Text(
-                    text = stringResource(id = R.string.login),
+                    text = stringResource(id = R.string.register),
                     color = MaterialTheme.colors.onPrimary
                 )
             }
         }
         Text(
             text = buildAnnotatedString {
-                append(stringResource(id = R.string.dont_have_an_account_yet))
+                append(stringResource(id = R.string.already_have_an_account))
                 append(" ")
-                val signUpText = stringResource(id = R.string.sign_up)
+                val signUpText = stringResource(id = R.string.sign_in)
                 withStyle(
                     style = SpanStyle(
                         color = MaterialTheme.colors.primary
                     )
-                ) {
-                    append(signUpText)
-                }
+                ) { append(signUpText) }
             },
             style = MaterialTheme.typography.body1,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .clickable { navController.navigate(Screen.RegisterScreen.route) }
+                .clickable { navController.popBackStack() }
         )
     }
 }

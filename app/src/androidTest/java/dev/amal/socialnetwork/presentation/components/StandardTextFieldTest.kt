@@ -31,20 +31,14 @@ class StandardTextFieldTest {
     @Test
     fun enterTooLongString_maxLengthNotExceeded() {
         composeTestRule.setContent {
-            var text by remember {
-                mutableStateOf("")
-            }
+            var text by remember { mutableStateOf("") }
             MaterialTheme {
                 StandardTextField(
                     text = text,
-                    onValueChange = {
-                        text = it
-                    },
+                    onValueChange = { text = it },
                     maxLength = 5,
                     modifier = Modifier
-                        .semantics {
-                            testTag = STANDARD_TEXT_FIELD
-                        }
+                        .semantics { testTag = STANDARD_TEXT_FIELD }
                 )
             }
         }
@@ -68,15 +62,11 @@ class StandardTextFieldTest {
     @Test
     fun enterPassword_toggleVisibility_passwordVisible() {
         composeTestRule.setContent {
-            var text by remember {
-                mutableStateOf("")
-            }
+            var text by remember { mutableStateOf("") }
             MaterialTheme {
                 StandardTextField(
                     text = text,
-                    onValueChange = {
-                        text = it
-                    },
+                    onValueChange = { text = it },
                     maxLength = 5,
                     keyboardType = KeyboardType.Password
                 )
@@ -89,5 +79,4 @@ class StandardTextFieldTest {
         composeTestRule
             .onNodeWithTag(PASSWORD_TOGGLE)
     }
-
 }
