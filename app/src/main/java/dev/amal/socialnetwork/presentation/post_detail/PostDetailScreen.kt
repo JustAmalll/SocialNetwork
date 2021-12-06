@@ -38,10 +38,9 @@ fun PostDetailScreen(
         StandardToolbar(
             navController = navController,
             modifier = Modifier.fillMaxWidth(),
-            showBackArrow = true,
             title = {
                 Text(
-                    text = stringResource(id = R.string.your_feed),
+                    text = stringResource(id = R.string.your_profile),
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colors.onBackground
                 )

@@ -36,7 +36,6 @@ fun MainFeedScreen(
                     color = MaterialTheme.colors.onBackground
                 )
             },
-            showBackArrow = true,
             navActions = {
                 IconButton(onClick = {
                     navController.navigate(Screen.SearchScreen.route)
