@@ -1,6 +1,7 @@
 package dev.amal.socialnetwork.presentation.util
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -10,18 +11,21 @@ import dev.amal.socialnetwork.domain.models.Post
 import dev.amal.socialnetwork.presentation.activity.ActivityScreen
 import dev.amal.socialnetwork.presentation.chat.ChatScreen
 import dev.amal.socialnetwork.presentation.create_post.CreatePostScreen
+import dev.amal.socialnetwork.presentation.edit_profile.EditProfileScreen
 import dev.amal.socialnetwork.presentation.login.LoginScreen
 import dev.amal.socialnetwork.presentation.main_feed.MainFeedScreen
 import dev.amal.socialnetwork.presentation.post_detail.PostDetailScreen
 import dev.amal.socialnetwork.presentation.profile.ProfileScreen
 import dev.amal.socialnetwork.presentation.register.RegisterScreen
+import dev.amal.socialnetwork.presentation.search.SearchScreen
 import dev.amal.socialnetwork.presentation.splash.SplashScreen
 
+@ExperimentalMaterialApi
 @Composable
 fun Navigation(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = Screen.SplashScreen.route,
+        startDestination = Screen.LoginScreen.route,
         modifier = Modifier.fillMaxSize()
     ) {
         composable(Screen.SplashScreen.route) {
@@ -45,9 +49,18 @@ fun Navigation(navController: NavHostController) {
         composable(Screen.ProfileScreen.route) {
             ProfileScreen(navController = navController)
         }
+        composable(Screen.EditProfileScreen.route) {
+            EditProfileScreen(navController = navController)
+        }
         composable(Screen.CreatePostScreen.route) {
             CreatePostScreen(navController = navController)
         }
+        composable(Screen.SearchScreen.route) {
+            SearchScreen(navController = navController)
+        }
+//        composable(Screen.PersonListScreen.route) {
+//            PersonListScreen(navController = navController)
+//        }
         composable(Screen.PostDetailScreen.route) {
             PostDetailScreen(
                 navController = navController,

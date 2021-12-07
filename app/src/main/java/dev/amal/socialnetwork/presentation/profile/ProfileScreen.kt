@@ -101,7 +101,7 @@ fun ProfileScreen(
                         followerCount = 702,
                         followingCount = 410,
                         postCount = 4
-                    )
+                    ), onEditClick = { navController.navigate(Screen.EditProfileScreen.route) }
                 )
             }
             items(4) {
