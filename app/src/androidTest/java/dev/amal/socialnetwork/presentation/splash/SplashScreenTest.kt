@@ -5,9 +5,10 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.navigation.NavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.amal.socialnetwork.presentation.MainActivity
-import dev.amal.socialnetwork.presentation.ui.theme.SocialNetworkTheme
-import dev.amal.socialnetwork.presentation.util.Screen
-import dev.amal.socialnetwork.util.Constants
+import dev.amal.socialnetwork.core.presentation.ui.theme.SocialNetworkTheme
+import dev.amal.socialnetwork.core.util.Screen
+import dev.amal.socialnetwork.core.util.Constants
+import dev.amal.socialnetwork.feature_auth.presentation.splash.SplashScreen
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.verify
