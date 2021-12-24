@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.sp
 import dev.amal.socialnetwork.R
 import dev.amal.socialnetwork.core.domain.models.Post
 import dev.amal.socialnetwork.core.presentation.ui.theme.*
-import dev.amal.socialnetwork.presentation.ui.theme.*
 import dev.amal.socialnetwork.core.util.Constants
 
 @Composable
@@ -106,7 +105,7 @@ fun StandardPost(
                 ) {
                     Text(
                         text = stringResource(
-                            id = R.string.liked_by_x_people,
+                            id = R.string.app_name,
                             post.likeCount
                         ),
                         fontWeight = FontWeight.Bold,

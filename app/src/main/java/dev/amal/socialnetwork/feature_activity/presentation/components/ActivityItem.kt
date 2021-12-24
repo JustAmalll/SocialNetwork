@@ -27,7 +27,6 @@ import dev.amal.socialnetwork.core.presentation.ui.theme.SpaceExtraSmall
 import dev.amal.socialnetwork.core.presentation.ui.theme.SpaceMedium
 import dev.amal.socialnetwork.core.presentation.ui.theme.SpaceSmall
 import dev.amal.socialnetwork.feature_activity.domain.ActivityAction
-import dev.amal.socialnetwork.presentation.ui.theme.*
 
 @Composable
 fun ActivityItem(

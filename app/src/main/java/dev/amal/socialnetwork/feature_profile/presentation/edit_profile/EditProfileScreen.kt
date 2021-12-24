@@ -41,6 +41,7 @@ import dev.amal.socialnetwork.core.presentation.ui.theme.ProfilePictureSizeLarge
 import dev.amal.socialnetwork.core.presentation.ui.theme.SpaceLarge
 import dev.amal.socialnetwork.core.presentation.ui.theme.SpaceMedium
 import dev.amal.socialnetwork.core.domain.states.StandardTextFieldState
+import dev.amal.socialnetwork.feature_profile.util.EditProfileError
 import kotlin.random.Random
 
 @Composable
@@ -93,7 +94,10 @@ fun EditProfileScreen(
                         .fillMaxWidth(),
                     text = viewModel.usernameState.value.text,
                     hint = stringResource(id = R.string.username),
-                    error = viewModel.usernameState.value.error,
+                    error = when (viewModel.usernameState.value.error) {
+                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.error_field_empty)
+                        else -> ""
+                    },
                     leadingIcon = Icons.Default.Person,
                     onValueChange = {
                         viewModel.setUsernameState(
@@ -106,7 +110,10 @@ fun EditProfileScreen(
                     modifier = Modifier.fillMaxWidth(),
                     text = viewModel.githubTextFieldState.value.text,
                     hint = stringResource(id = R.string.github_profile_url),
-                    error = viewModel.githubTextFieldState.value.error,
+                    error = when (viewModel.githubTextFieldState.value.error) {
+                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.error_field_empty)
+                        else -> ""
+                    },
                     leadingIcon = ImageVector.vectorResource(id = R.drawable.ic_github),
                     onValueChange = {
                         viewModel.setGithubTextFieldState(
@@ -119,7 +126,10 @@ fun EditProfileScreen(
                     modifier = Modifier.fillMaxWidth(),
                     text = viewModel.instagramTextFieldState.value.text,
                     hint = stringResource(id = R.string.instagram_profile_url),
-                    error = viewModel.instagramTextFieldState.value.error,
+                    error = when (viewModel.instagramTextFieldState.value.error) {
+                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.error_field_empty)
+                        else -> ""
+                    },
                     leadingIcon = ImageVector.vectorResource(id = R.drawable.ic_instagram),
                     onValueChange = {
                         viewModel.setInstagramTextFieldState(
@@ -132,7 +142,10 @@ fun EditProfileScreen(
                     modifier = Modifier.fillMaxWidth(),
                     text = viewModel.linkedInTextFieldState.value.text,
                     hint = stringResource(id = R.string.linked_in_profile_url),
-                    error = viewModel.linkedInTextFieldState.value.error,
+                    error = when (viewModel.linkedInTextFieldState.value.error) {
+                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.error_field_empty)
+                        else -> ""
+                    },
                     leadingIcon = ImageVector.vectorResource(id = R.drawable.ic_linkedin),
                     onValueChange = {
                         viewModel.setLinkedInTextFieldState(
@@ -145,7 +158,10 @@ fun EditProfileScreen(
                     modifier = Modifier.fillMaxWidth(),
                     text = viewModel.bioState.value.text,
                     hint = stringResource(id = R.string.your_bio),
-                    error = viewModel.bioState.value.error,
+                    error = when (viewModel.bioState.value.error) {
+                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.error_field_empty)
+                        else -> ""
+                    },
                     singleLine = false,
                     maxLines = 3,
                     leadingIcon = Icons.Default.Description,

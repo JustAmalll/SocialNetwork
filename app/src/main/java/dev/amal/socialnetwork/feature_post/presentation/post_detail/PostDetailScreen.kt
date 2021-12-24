@@ -26,7 +26,6 @@ import dev.amal.socialnetwork.core.domain.models.Post
 import dev.amal.socialnetwork.core.presentation.components.ActionRow
 import dev.amal.socialnetwork.core.presentation.components.StandardToolbar
 import dev.amal.socialnetwork.core.presentation.ui.theme.*
-import dev.amal.socialnetwork.presentation.ui.theme.*
 
 @Composable
 fun PostDetailScreen(
@@ -96,7 +95,7 @@ fun PostDetailScreen(
                                 Spacer(modifier = Modifier.height(SpaceMedium))
                                 Text(
                                     text = stringResource(
-                                        id = R.string.liked_by_x_people,
+                                        id = R.string.app_name,
                                         post.likeCount
                                     ),
                                     fontWeight = FontWeight.Bold,
@@ -199,7 +198,7 @@ fun Comment(
             }
             Spacer(modifier = Modifier.height(SpaceMedium))
             Text(
-                text = stringResource(id = R.string.liked_by_x_people, comment.likeCount),
+                text = stringResource(id = R.string.app_name, comment.likeCount),
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.body2,
                 color = MaterialTheme.colors.onBackground

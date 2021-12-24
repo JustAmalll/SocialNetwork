@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">SocialNetwork</string>
-
     <string name="login">Login</string>
     <string name="password_hint">Password</string>
     <string name="login_hint">Username / E-Mail</string>
@@ -18,7 +17,7 @@
     <string name="comment">Comment</string>
     <string name="share">Share</string>
     <string name="read_more">Read more</string>
-    <string name="liked_by_x_people">Liked by %d people</string>
+    <string name="x_likes">%d likes</string>
     <string name="x_comments">%d comments</string>
     <string name="home">Home</string>
     <string name="chat">Chat</string>
@@ -56,8 +55,37 @@
     <string name="description">Description</string>
     <string name="liked_by">Liked by</string>
     <string name="followed_you">followed you</string>
-    <string name="this_field_cant_be_empty">This field can\'t be empty</string>
+    <string name="error_field_empty">This field can\'t be empty</string>
     <string name="not_a_valid_email">This is not a valid email</string>
     <string name="input_too_short">The minimum length is %d</string>
     <string name="invalid_password">The password needs to contain at least one uppercase letter and one number</string>
+    <string name="error_unknown">Unknown error</string>
+    <string name="error_couldnt_reach_server">\"Oops! Couldn\'t reach server. Check your internet connection.\"</string>
+    <string name="oops_something_went_wrong">\"Oops! Something went wrong. Please try again.\"</string>
+    <string name="success_registration">Successfully registered an account. You can login now.</string>
+    <string name="error_file_not_found">Oops! The file couldn\'t be found.</string>
+    <string name="post_image">Post image</string>
+    <string name="post_created">Successfully created post</string>
+    <string name="error_description_blank">The description can\'t be empty</string>
+    <string name="error_no_image_picked">Please pick a photo</string>
+    <string name="error_couldnt_load_profile">Oops! Couldn\'t load profile.</string>
+    <string name="error_couldnt_load_skills">Oops! Couldn\'t load skills</string>
+    <string name="error_username_empty">The username can\'t be empty.</string>
+    <string name="updated_profile">Successfully updated profile</string>
+    <string name="error_max_skills_selected">You can only have %s top skills at a time</string>
+    <string name="error_invalid_github_url">This is not valid GitHub url</string>
+    <string name="error_invalid_instagram_url">This is not a valid Instagram url</string>
+    <string name="error_invalid_linked_in_url">This is not a valid LinkedIn url</string>
+    <string name="your_comment">your comment</string>
+    <string name="send_comment">Send comment</string>
+    <string name="enter_a_comment">Enter a comment...</string>
+    <string name="comment_posted">Successfully posted comment</string>
+    <string name="logout">Logout</string>
+    <string name="do_you_want_to_logout">Do you want to logout?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="share_intent_text">Hey, I found a great post, check it out :)\n%s</string>
+    <string name="error_not_logged_in">Oops! Please login before doing that.</string>
+    <string name="enter_a_message">Enter a message...</string>
+    <string name="message">Send message</string>
 </resources>

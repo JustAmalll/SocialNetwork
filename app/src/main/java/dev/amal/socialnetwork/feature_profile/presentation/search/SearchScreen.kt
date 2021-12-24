@@ -54,7 +54,7 @@ fun SearchScreen(
                 modifier = Modifier.fillMaxWidth(),
                 text = viewModel.searchState.value.text,
                 hint = stringResource(id = R.string.search),
-                error = viewModel.searchState.value.error,
+                error = "",
                 leadingIcon = Icons.Default.Search,
                 onValueChange = {
                     viewModel.setSearchState(

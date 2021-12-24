@@ -19,12 +19,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import dev.amal.socialnetwork.R
+import dev.amal.socialnetwork.core.domain.states.StandardTextFieldState
 import dev.amal.socialnetwork.core.presentation.components.StandardTextField
 import dev.amal.socialnetwork.core.presentation.components.StandardToolbar
 import dev.amal.socialnetwork.core.presentation.ui.theme.SpaceLarge
 import dev.amal.socialnetwork.core.presentation.ui.theme.SpaceMedium
 import dev.amal.socialnetwork.core.presentation.ui.theme.SpaceSmall
-import dev.amal.socialnetwork.core.domain.states.StandardTextFieldState
+import dev.amal.socialnetwork.feature_post.presentation.util.PostDescriptionError
 
 @Composable
 fun CreatePostScreen(
@@ -73,7 +74,10 @@ fun CreatePostScreen(
                 modifier = Modifier.fillMaxWidth(),
                 text = viewModel.descriptionState.value.text,
                 hint = stringResource(id = R.string.description),
-                error = viewModel.descriptionState.value.error,
+                error = when (viewModel.descriptionState.value.error) {
+                    is PostDescriptionError.FieldEmpty -> stringResource(id = R.string.error_field_empty)
+                    else -> ""
+                },
                 singleLine = false,
                 maxLines = 5,
                 onValueChange = {

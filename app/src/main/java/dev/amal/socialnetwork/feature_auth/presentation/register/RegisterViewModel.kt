@@ -1,21 +1,26 @@
 package dev.amal.socialnetwork.feature_auth.presentation.register
 
-import android.util.Patterns
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.amal.socialnetwork.R
 import dev.amal.socialnetwork.core.domain.states.PasswordTextFieldState
 import dev.amal.socialnetwork.core.domain.states.StandardTextFieldState
-import dev.amal.socialnetwork.core.util.Constants
+import dev.amal.socialnetwork.core.presentation.util.UiEvent
+import dev.amal.socialnetwork.core.util.Resource
+import dev.amal.socialnetwork.core.util.UiText
+import dev.amal.socialnetwork.feature_auth.domain.use_case.RegisterUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterViewModel @Inject constructor() : ViewModel() {
+class RegisterViewModel @Inject constructor(
+    private val registerUseCase: RegisterUseCase
+) : ViewModel() {
 
     private val _emailState = mutableStateOf(StandardTextFieldState())
     val emailState: State<StandardTextFieldState> = _emailState
@@ -29,8 +34,8 @@ class RegisterViewModel @Inject constructor() : ViewModel() {
     private val _registerState = mutableStateOf(RegisterState())
     val registerState: State<RegisterState> = _registerState
 
-//    private val _eventFlow = MutableSharedFlow<UiEvent>()
-//    val eventFlow = _eventFlow.asSharedFlow()
+    private val _eventFlow = MutableSharedFlow<UiEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     private val _onRegister = MutableSharedFlow<Unit>(replay = 1)
     val onRegister = _onRegister.asSharedFlow()
@@ -65,7 +70,52 @@ class RegisterViewModel @Inject constructor() : ViewModel() {
 
     private fun register() {
         viewModelScope.launch {
+            _usernameState.value = usernameState.value.copy(error = null)
+            _emailState.value = emailState.value.copy(error = null)
+            _passwordState.value = passwordState.value.copy(error = null)
+            _registerState.value = RegisterState(isLoading = true)
 
+            val registerResult = registerUseCase(
+                email = emailState.value.text,
+                username = usernameState.value.text,
+                password = passwordState.value.text
+            )
+            if (registerResult.emailError != null) {
+                _emailState.value = emailState.value.copy(
+                    error = registerResult.emailError
+                )
+            }
+            if (registerResult.usernameError != null) {
+                _usernameState.value = _usernameState.value.copy(
+                    error = registerResult.usernameError
+                )
+            }
+            if (registerResult.passwordError != null) {
+                _passwordState.value = _passwordState.value.copy(
+                    error = registerResult.passwordError
+                )
+            }
+            when (registerResult.result) {
+                is Resource.Success -> {
+                    _eventFlow.emit(
+                        UiEvent.ShowSnackBar(UiText.StringResource(R.string.success_registration))
+                    )
+                    _onRegister.emit(Unit)
+                    _registerState.value = RegisterState(isLoading = false)
+                    _usernameState.value = StandardTextFieldState()
+                    _emailState.value = StandardTextFieldState()
+                    _passwordState.value = PasswordTextFieldState()
+                }
+                is Resource.Error -> {
+                    _eventFlow.emit(
+                        UiEvent.ShowSnackBar(registerResult.result.uiText ?: UiText.unknownError())
+                    )
+                    _registerState.value = RegisterState(isLoading = false)
+                }
+                null -> {
+                    _registerState.value = RegisterState(isLoading = false)
+                }
+            }
         }
     }
 }
