@@ -4,9 +4,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -19,9 +22,14 @@ import dev.amal.socialnetwork.R
 import dev.amal.socialnetwork.core.presentation.components.StandardTextField
 import dev.amal.socialnetwork.core.presentation.ui.theme.SpaceLarge
 import dev.amal.socialnetwork.core.presentation.ui.theme.SpaceMedium
+import dev.amal.socialnetwork.core.presentation.util.UiEvent
+import dev.amal.socialnetwork.core.presentation.util.asString
 import dev.amal.socialnetwork.core.util.Constants
 import dev.amal.socialnetwork.feature_auth.presentation.util.AuthError
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 
+@ExperimentalComposeUiApi
 @Composable
 fun RegisterScreen(
     navController: NavController,
@@ -34,6 +42,26 @@ fun RegisterScreen(
     val passwordState = viewModel.passwordState.value
     val registerState = viewModel.registerState.value
     val context = LocalContext.current
+
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    LaunchedEffect(key1 = true) {
+        viewModel.onRegister.collect { onPopBackStack() }
+    }
+    LaunchedEffect(key1 = keyboardController) {
+        viewModel.eventFlow.collectLatest { event ->
+            when (event) {
+                is UiEvent.ShowSnackBar -> {
+                    keyboardController?.hide()
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        event.uiText.asString(context),
+                        duration = SnackbarDuration.Long
+                    )
+                }
+                else -> {}
+            }
+        }
+    }
 
     Box(
         modifier = Modifier

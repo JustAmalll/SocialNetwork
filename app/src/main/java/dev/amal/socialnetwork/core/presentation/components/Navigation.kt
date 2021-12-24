@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -22,6 +23,7 @@ import dev.amal.socialnetwork.feature_profile.presentation.search.SearchScreen
 import dev.amal.socialnetwork.presentation.main_feed.MainFeedScreen
 import dev.amal.socialnetwork.presentation.post_detail.PostDetailScreen
 
+@ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @Composable
 fun Navigation(

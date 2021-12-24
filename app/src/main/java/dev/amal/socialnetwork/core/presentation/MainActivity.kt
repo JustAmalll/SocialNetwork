@@ -9,6 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -18,6 +19,7 @@ import dev.amal.socialnetwork.core.presentation.ui.theme.SocialNetworkTheme
 import dev.amal.socialnetwork.core.util.Screen
 import dev.amal.socialnetwork.core.presentation.components.Navigation
 
+@ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
