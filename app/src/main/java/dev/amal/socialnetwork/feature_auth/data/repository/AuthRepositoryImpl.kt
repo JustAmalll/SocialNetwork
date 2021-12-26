@@ -74,6 +74,17 @@ class AuthRepositoryImpl(
     }
 
     override suspend fun authenticate(): SimpleResource {
-        TODO("Not yet implemented")
+        return try {
+            api.authenticate()
+            Resource.Success(Unit)
+        } catch(e: IOException) {
+            Resource.Error(
+                uiText = UiText.StringResource(R.string.error_couldnt_reach_server)
+            )
+        } catch(e: HttpException) {
+            Resource.Error(
+                uiText = UiText.StringResource(R.string.oops_something_went_wrong)
+            )
+        }
     }
 }

@@ -13,19 +13,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import dev.amal.socialnetwork.R
+import dev.amal.socialnetwork.core.presentation.util.UiEvent
 import dev.amal.socialnetwork.core.util.Screen
 import dev.amal.socialnetwork.core.util.Constants
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.withContext
 
 @Composable
 fun SplashScreen(
-    navController: NavController,
-    dispatcher: CoroutineDispatcher = Dispatchers.Main
+    dispatcher: CoroutineDispatcher = Dispatchers.Main,
+    onPopBackStack: () -> Unit = {},
+    onNavigate: (String) -> Unit = {},
+    viewModel: SplashViewModel = hiltViewModel()
 ) {
     val scale = remember {
         Animatable(0f)
@@ -44,9 +49,18 @@ fun SplashScreen(
                     }
                 )
             )
-            delay(Constants.SPLASH_SCREEN_DURATION)
-            navController.popBackStack()
-            navController.navigate(Screen.LoginScreen.route)
+        }
+    }
+    LaunchedEffect(key1 = true) {
+        viewModel.eventFlow.collectLatest { event ->
+            when(event) {
+                is UiEvent.Navigate -> {
+                    delay(Constants.SPLASH_SCREEN_DURATION)
+                    onPopBackStack()
+                    onNavigate(event.route)
+                }
+                else -> Unit
+            }
         }
     }
     Box(
@@ -54,8 +68,8 @@ fun SplashScreen(
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_launcher_foreground),
-            contentDescription = "logo",
+            painter = painterResource(id = R.drawable.me),
+            contentDescription = "Logo",
             modifier = Modifier.scale(scale.value)
         )
     }
