@@ -39,7 +39,14 @@ fun Navigation(
             SplashScreen(navController = navController)
         }
         composable(Screen.LoginScreen.route) {
-            LoginScreen(navController = navController)
+            LoginScreen(
+                onNavigate = navController::navigate,
+                onLogin = {
+                    navController.popBackStack(route = Screen.LoginScreen.route, inclusive = true)
+                    navController.navigate(route = Screen.MainFeedScreen.route)
+                },
+                scaffoldState = scaffoldState
+            )
         }
         composable(Screen.RegisterScreen.route) {
             RegisterScreen(

@@ -8,6 +8,7 @@ import dagger.hilt.components.SingletonComponent
 import dev.amal.socialnetwork.feature_auth.data.remote.AuthApi
 import dev.amal.socialnetwork.feature_auth.data.repository.AuthRepositoryImpl
 import dev.amal.socialnetwork.feature_auth.domain.repository.AuthRepository
+import dev.amal.socialnetwork.feature_auth.domain.use_case.LoginUseCase
 import dev.amal.socialnetwork.feature_auth.domain.use_case.RegisterUseCase
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -37,4 +38,8 @@ object AuthModule {
     fun provideRegisterUseCase(repository: AuthRepository): RegisterUseCase =
         RegisterUseCase(repository)
 
+    @Provides
+    @Singleton
+    fun provideLoginUseCase(repository: AuthRepository): LoginUseCase =
+        LoginUseCase(repository)
 }

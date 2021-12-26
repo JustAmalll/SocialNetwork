@@ -3,43 +3,84 @@ package dev.amal.socialnetwork.feature_auth.presentation.login
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.amal.socialnetwork.core.domain.states.StandardTextFieldState
+import dev.amal.socialnetwork.core.presentation.util.UiEvent
+import dev.amal.socialnetwork.core.util.Resource
+import dev.amal.socialnetwork.core.util.UiText
+import dev.amal.socialnetwork.feature_auth.domain.use_case.LoginUseCase
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor() : ViewModel() {
-    private val _usernameText = mutableStateOf("")
-    val usernameText: State<String> = _usernameText
+class LoginViewModel @Inject constructor(
+    private val loginUseCase: LoginUseCase
+) : ViewModel() {
 
-    private val _passwordText = mutableStateOf("")
-    val passwordText: State<String> = _passwordText
+    private val _emailState = mutableStateOf(StandardTextFieldState())
+    val emailState: State<StandardTextFieldState> = _emailState
 
-    private val _showPassword = mutableStateOf(false)
-    val showPassword: State<Boolean> = _showPassword
+    private val _passwordState = mutableStateOf(StandardTextFieldState())
+    val passwordState: State<StandardTextFieldState> = _passwordState
 
-    private val _usernameError = mutableStateOf("")
-    val usernameError: State<String> = _usernameError
+    private val _loginState = mutableStateOf(LoginState())
+    val loginState: State<LoginState> = _loginState
 
-    private val _passwordError = mutableStateOf("")
-    val passwordError: State<String> = _passwordError
+    private val _eventFlow = MutableSharedFlow<UiEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
-    fun setUsernameText(username: String) {
-        _usernameText.value = username
-    }
-
-    fun setPasswordText(password: String) {
-        _passwordText.value = password
-    }
-
-    fun setIsUsernameError(error: String) {
-        _usernameError.value = error
-    }
-
-    fun setIsPasswordError(error: String) {
-        _passwordError.value = error
-    }
-
-    fun setShowPassword(showPassword: Boolean) {
-        _showPassword.value = showPassword
+    fun onEvent(event: LoginEvent) {
+        when (event) {
+            is LoginEvent.EnteredEmail -> {
+                _emailState.value = emailState.value.copy(
+                    text = event.email
+                )
+            }
+            is LoginEvent.EnteredPassword -> {
+                _passwordState.value = passwordState.value.copy(
+                    text = event.password
+                )
+            }
+            is LoginEvent.TogglePasswordVisibility -> {
+                _loginState.value = loginState.value.copy(
+                    isPasswordVisible = !loginState.value.isPasswordVisible
+                )
+            }
+            is LoginEvent.Login -> {
+                viewModelScope.launch {
+                    _loginState.value = loginState.value.copy(isLoading = true)
+                    val loginResult = loginUseCase(
+                        email = emailState.value.text,
+                        password = passwordState.value.text
+                    )
+                    _loginState.value = loginState.value.copy(isLoading = false)
+                    if (loginResult.emailError != null) {
+                        _emailState.value = emailState.value.copy(
+                            error = loginResult.emailError
+                        )
+                    }
+                    if (loginResult.passwordError != null) {
+                        _passwordState.value = _passwordState.value.copy(
+                            error = loginResult.passwordError
+                        )
+                    }
+                    when (loginResult.result) {
+                        is Resource.Success -> {
+                            _eventFlow.emit(UiEvent.OnLogin)
+                        }
+                        is Resource.Error -> {
+                            _eventFlow.emit(
+                                UiEvent.ShowSnackBar(
+                                    loginResult.result.uiText ?: UiText.unknownError()
+                                )
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 }
