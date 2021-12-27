@@ -19,12 +19,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import coil.ImageLoader
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import dev.amal.socialnetwork.R
-import dev.amal.socialnetwork.core.domain.states.StandardTextFieldState
 import dev.amal.socialnetwork.core.presentation.components.StandardTextField
 import dev.amal.socialnetwork.core.presentation.components.StandardToolbar
 import dev.amal.socialnetwork.core.presentation.ui.theme.SpaceLarge
@@ -33,6 +31,7 @@ import dev.amal.socialnetwork.core.presentation.ui.theme.SpaceSmall
 import dev.amal.socialnetwork.core.presentation.util.CropActivityResultContract
 import dev.amal.socialnetwork.core.presentation.util.UiEvent
 import dev.amal.socialnetwork.core.presentation.util.asString
+import dev.amal.socialnetwork.feature_post.presentation.util.PostConstants
 import dev.amal.socialnetwork.feature_post.presentation.util.PostDescriptionError
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -77,6 +76,7 @@ fun CreatePostScreen(
                 is UiEvent.NavigateUp -> {
                     onNavigateUp()
                 }
+                else -> {}
             }
         }
     }
@@ -141,6 +141,7 @@ fun CreatePostScreen(
                 },
                 singleLine = false,
                 maxLines = 5,
+                maxLength = PostConstants.MAX_POST_DESCRIPTION_LENGTH,
                 onValueChange = {
                     viewModel.onEvent(CreatePostEvent.EnterDescription(it))
                 }
