@@ -1,4 +1,4 @@
-package dev.amal.socialnetwork.presentation.post_detail
+package dev.amal.socialnetwork.feature_post.presentation.post_detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,13 +30,14 @@ import dev.amal.socialnetwork.core.presentation.ui.theme.*
 @Composable
 fun PostDetailScreen(
     navController: NavController,
+    onNavigateUp: () -> Unit = {},
     post: Post
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
         StandardToolbar(
-            navController = navController,
+            onNavigateUp = onNavigateUp,
             modifier = Modifier.fillMaxWidth(),
             title = {
                 Text(

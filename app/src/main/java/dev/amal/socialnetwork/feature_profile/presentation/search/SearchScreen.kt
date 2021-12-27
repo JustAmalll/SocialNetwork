@@ -29,13 +29,14 @@ import dev.amal.socialnetwork.core.domain.states.StandardTextFieldState
 @Composable
 fun SearchScreen(
     navController: NavController,
+    onNavigateUp: () -> Unit = {},
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
         StandardToolbar(
-            navController = navController,
+            onNavigateUp = onNavigateUp,
             showBackArrow = true,
             title = {
                 Text(

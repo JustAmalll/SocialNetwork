@@ -3,6 +3,8 @@ package dev.amal.socialnetwork.di
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import coil.ImageLoader
+import coil.decode.SvgDecoder
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -44,6 +46,16 @@ object AppModule {
             }
         )
         .build()
+
+    @Provides
+    @Singleton
+    fun provideImageLoader(app: Application): ImageLoader =
+        ImageLoader.Builder(app)
+            .crossfade(true)
+            .componentRegistry {
+                add(SvgDecoder(app))
+            }
+            .build()
 
     @Provides
     @Singleton

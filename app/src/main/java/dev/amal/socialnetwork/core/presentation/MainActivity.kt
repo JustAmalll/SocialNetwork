@@ -13,16 +13,25 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import coil.annotation.ExperimentalCoilApi
 import dagger.hilt.android.AndroidEntryPoint
 import dev.amal.socialnetwork.core.presentation.components.StandardScaffold
 import dev.amal.socialnetwork.core.presentation.ui.theme.SocialNetworkTheme
 import dev.amal.socialnetwork.core.util.Screen
 import dev.amal.socialnetwork.core.presentation.components.Navigation
+import kotlinx.coroutines.DelicateCoroutinesApi
+import javax.inject.Inject
 
+@DelicateCoroutinesApi
+@ExperimentalCoilApi
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var imageLoader: coil.ImageLoader
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -49,7 +58,7 @@ class MainActivity : ComponentActivity() {
                             navController.navigate(Screen.CreatePostScreen.route)
                         }
                     ) {
-                        Navigation(navController, scaffoldState)
+                        Navigation(navController, scaffoldState, imageLoader)
                     }
                 }
             }

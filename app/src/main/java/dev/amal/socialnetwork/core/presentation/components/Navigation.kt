@@ -9,6 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import coil.ImageLoader
+import coil.annotation.ExperimentalCoilApi
 import dev.amal.socialnetwork.core.domain.models.Post
 import dev.amal.socialnetwork.core.util.Screen
 import dev.amal.socialnetwork.feature_activity.presentation.ActivityScreen
@@ -20,15 +22,19 @@ import dev.amal.socialnetwork.feature_post.presentation.create_post.CreatePostSc
 import dev.amal.socialnetwork.feature_profile.presentation.edit_profile.EditProfileScreen
 import dev.amal.socialnetwork.feature_profile.presentation.profile.ProfileScreen
 import dev.amal.socialnetwork.feature_profile.presentation.search.SearchScreen
-import dev.amal.socialnetwork.presentation.main_feed.MainFeedScreen
-import dev.amal.socialnetwork.presentation.post_detail.PostDetailScreen
+import dev.amal.socialnetwork.feature_post.presentation.main_feed.MainFeedScreen
+import dev.amal.socialnetwork.feature_post.presentation.post_detail.PostDetailScreen
+import kotlinx.coroutines.DelicateCoroutinesApi
 
+@ExperimentalCoilApi
+@DelicateCoroutinesApi
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @Composable
 fun Navigation(
     navController: NavHostController,
-    scaffoldState: ScaffoldState
+    scaffoldState: ScaffoldState,
+    imageLoader: ImageLoader
 ) {
     NavHost(
         navController = navController,
@@ -59,13 +65,21 @@ fun Navigation(
             )
         }
         composable(Screen.MainFeedScreen.route) {
-            MainFeedScreen(navController = navController)
+            MainFeedScreen(
+                onNavigateUp = navController::navigateUp,
+                onNavigate = navController::navigate,
+                scaffoldState = scaffoldState,
+                imageLoader = imageLoader
+            )
         }
         composable(Screen.ChatScreen.route) {
             ChatScreen(navController = navController)
         }
         composable(Screen.ActivityScreen.route) {
-            ActivityScreen(navController = navController)
+            ActivityScreen(
+                onNavigateUp = navController::navigateUp,
+                onNavigate = navController::navigate,
+            )
         }
         composable(Screen.ProfileScreen.route) {
             ProfileScreen(navController = navController)
@@ -74,7 +88,12 @@ fun Navigation(
             EditProfileScreen(navController = navController)
         }
         composable(Screen.CreatePostScreen.route) {
-            CreatePostScreen(navController = navController)
+            CreatePostScreen(
+                onNavigateUp = navController::navigateUp,
+                onNavigate = navController::navigate,
+                scaffoldState = scaffoldState,
+                imageLoader = imageLoader
+            )
         }
         composable(Screen.SearchScreen.route) {
             SearchScreen(navController = navController)

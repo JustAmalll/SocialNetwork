@@ -16,8 +16,8 @@ import dev.amal.socialnetwork.R
 
 @Composable
 fun StandardToolbar(
-    navController: NavController,
     modifier: Modifier = Modifier,
+    onNavigateUp: () -> Unit = {},
     showBackArrow: Boolean = false,
     navActions: @Composable RowScope.() -> Unit = {},
     title: @Composable () -> Unit = {},
@@ -25,10 +25,10 @@ fun StandardToolbar(
     TopAppBar(
         title = title,
         modifier = modifier,
-        navigationIcon = if (showBackArrow) {
+        navigationIcon = if(showBackArrow) {
             {
                 IconButton(onClick = {
-                    navController.navigateUp()
+                    onNavigateUp()
                 }) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,

@@ -8,6 +8,7 @@ import dagger.hilt.components.SingletonComponent
 import dev.amal.socialnetwork.feature_post.data.remote.PostApi
 import dev.amal.socialnetwork.feature_post.data.repository.PostRepositoryImpl
 import dev.amal.socialnetwork.feature_post.domain.repository.PostRepository
+import dev.amal.socialnetwork.feature_post.domain.use_case.CreatePostUseCase
 import dev.amal.socialnetwork.feature_post.domain.use_case.GetPostsForFollowsUseCase
 import dev.amal.socialnetwork.feature_post.domain.use_case.PostUseCases
 import okhttp3.OkHttpClient
@@ -38,7 +39,8 @@ object PostModule {
     fun providePostUseCases(
         repository: PostRepository
     ): PostUseCases = PostUseCases(
-        getPostsForFollows = GetPostsForFollowsUseCase(repository)
+        getPostsForFollows = GetPostsForFollowsUseCase(repository),
+        createPostUseCase = CreatePostUseCase(repository)
     )
 
 }
