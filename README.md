@@ -1,2 +1,2 @@
 # SocialNetwork
-Clean Architecture Social Network With Jetpack Compose and Ktor
+Clean Architecture Social Network With Jetpack Compose and Ktor Server 
